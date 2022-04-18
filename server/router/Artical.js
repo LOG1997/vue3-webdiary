@@ -1,0 +1,69 @@
+const mysql = require("../mysql/async_blog_pool");
+
+exports.submitArtical = async (req, res) => {
+  let user_id = req.body.user_id;
+  let id = req.body.id;
+  let title = req.body.title;
+  let content = req.body.content;
+  let create_time = req.body.create_time;
+  let update_time = req.body.update_time;
+  let label = req.body.label;
+  let imgUrl = req.body.label || "https://picsum.photos/200/200";
+  let sqldata = [
+    user_id,
+    id,
+    title,
+    content,
+    create_time,
+    update_time,
+    label,
+    title,
+    content,
+    update_time,
+    label,
+  ];
+  // 创建存储文章的表
+  let sqlCreateTable = `create table if not exists artical(\
+        user_id varchar(255) not null,\
+        id varchar(255) not null primary key,\
+        title varchar(255) not null,\
+        content text not null,\
+        create_time datetime,\
+        update_time datetime,\
+        label varchar(255),
+        index(user_id),\
+        index(title),\
+        index(label)\
+    )`;
+  let sqlInsert =
+    "insert into artical(user_id,id,title,content,create_time,update_time,label) values(?,?,?,?,?,?,?)\
+    on duplicate key update title=?,content=?,update_time=?,label=?";
+  await mysql.query(sqlCreateTable, "", (err, results) => {
+    if (err) {
+      console.log(err);
+    } else {
+      results.info = "创建成功";
+      console.log(results);
+    }
+  });
+  await mysql.query(sqlInsert, sqldata).then((result) => {
+    return res.json({ result: result });
+  });
+};
+exports.getArticalList = async (req, res) => {
+  let url=req.url;
+  let host=req.headers.host;
+  console.log("url:",host,url)
+  let user_id = req.query.user_id;
+  console.log("userid:", user_id);
+  let sql = `select * from artical where user_id=?`;
+  let sqlcount = `select count(*) as count from artical where user_id=?`;
+  let articalList = await mysql.query(sql, user_id).then((result) => {
+    return result;
+  });
+
+  let articalCount = await mysql.query(sqlcount, user_id).then((result) => {
+    return result;
+  });
+  return res.json({ articalList, articalCount });
+};
