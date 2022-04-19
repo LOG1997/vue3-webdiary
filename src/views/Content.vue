@@ -14,6 +14,7 @@ onMounted(() => {
 </script>
  
 <template>
+<h2>文章内容</h2>
     <div class="md-edtior w-auto text-left mt-10">
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1">标题</span>
