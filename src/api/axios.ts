@@ -1,7 +1,7 @@
 import axios from "axios";
 import qs from "qs";
 
-axios.defaults.baseURL = "http://localhost:4000/api";
+axios.defaults.baseURL = "/api";
 
 //post请求头
 axios.defaults.headers.post["Content-Type"] = "application/json";

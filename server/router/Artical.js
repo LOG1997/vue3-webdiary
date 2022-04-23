@@ -1,5 +1,5 @@
 const mysql = require("../mysql/async_blog_pool");
-
+// 提交数据
 exports.submitArtical = async (req, res) => {
   let user_id = req.body.user_id;
   let id = req.body.id;
@@ -50,6 +50,7 @@ exports.submitArtical = async (req, res) => {
     return res.json({ result: result });
   });
 };
+// 获取所有文章
 exports.getArticalList = async (req, res) => {
   let url=req.url;
   let host=req.headers.host;
@@ -67,3 +68,14 @@ exports.getArticalList = async (req, res) => {
   });
   return res.json({ articalList, articalCount });
 };
+// 获取指定文章
+exports.getArtical = async (req, res) => {
+  let id = req.query.id;
+  // let user_id=req.query.user_id;
+  console.log("id:", id);
+  let sql = `select * from artical where id=?`;
+  let artical = await mysql.query(sql, id).then((result) => {
+    return result;
+  });
+  return res.json({ artical });
+}

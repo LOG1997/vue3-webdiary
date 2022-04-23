@@ -1,29 +1,50 @@
 <script setup lang='ts'>
+import { type } from 'os';
 import { ref, reactive, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
+import { getArtical } from '../api/request';
 import MdEditor from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
+// import showdown from 'showdown';
+// let converter=new showdown.Converter();
+// converter.setOption('tables', true);
+// function comileMarkdown(value:string) {
+//     return converter.makeHtml(value);
+// }
 const route = useRoute();
-let content = ref();
-let title=ref();
+let id = ref();
+let user_id = ref();
+let data = ref();
 onMounted(() => {
-    content.value=route.query.content;
-    title.value=route.query.title;
-    console.log("获取到的参数", route.query);
+    id.value = route.query.id;
+    user_id.value = route.query.user_id;
+    console.log("Home传递过来的参数", route.query);
+    getArtical({ "id": id.value }).then((result: any) => {
+        console.log("RRRR", result.artical)
+        data.value = result.artical[0]
+        return 1
+    });
+
+
 });
 </script>
  
 <template>
-<h2>文章内容</h2>
-    <div class="md-edtior w-auto text-left mt-10">
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">标题</span>
-            <input type="text" class="form-control" style="width:100px" placeholder="Username" aria-label="Username"
-                aria-describedby="basic-addon1" v-model="title">
-            <button class="btn btn-primary" type="submit">Button</button>
+    <div v-if="data" class="text-center w-200 container mx-auto cursor-default">
+        <h2 class="w-200 mx-auto">{{ data.title }}</h2>
+        <div class="w-200 text-center mx-auto gap-10">
+            <span>author:</span>
+            <span class="mr-10 bg-blue-200 w-10 pl-10 pr-10 rounded-2xl cursor-pointer">{{ data.user_id }}</span>
+            <span>发表时间</span>
+            <span class="mr-10 bg-fuchsia-200 w-10 pl-10 pr-10 rounded-2xl">{{ data.create_time.slice(0, 10) }}</span>
         </div>
-            <md-editor v-model="content" />
+        <div class="w-200 mx-auto text-left">
+            <div>
+                <MdEditor class="c-markdown" v-model="data.content" :previewOnly="true"></MdEditor>
+            </div>
         </div>
+
+    </div>
 </template>
  
 <style scoped>

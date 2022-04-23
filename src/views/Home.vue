@@ -9,29 +9,27 @@ import axios from 'axios'
 
 
 let articalList = ref()
-// getAll({"user_id":1}).then((result:any) => {
-//     console.log("result:",typeof result);
-//     articalList.value = result.articalList;
-//     return result
-// });
-const dta=axios.get('/api/getArticalList/?user_id=1').then(result=>{
-  console.log("RRRR",result)
-  articalList.value = result.data.articalList;
-  return result
+getAll({"user_id":1}).then((result:any) => {
+    console.log("result:",typeof result);
+    articalList.value = result.articalList;
+    return result
 });
+// const dta=axios.get('/api/getArticalList/?user_id=1').then(result=>{
+//   console.log("RRRR",result)
+//   articalList.value = result.data.articalList;
+//   return result
+// });
 const clicktoPage = (page: number) => {
     console.log(page)
 }
 const router = useRouter()
 function getDetail(data:any){
-    console.log("传递数据",data.articalItem.content);
+    console.log("传递数据",data.articalItem);
     router.push({
         path:`/content`,
         query:{
             id:data.articalItem.id,
             user_id:data.articalItem.user_id,
-            title:data.articalItem.title,
-            content:data.articalItem.content
         }
     })
 }
