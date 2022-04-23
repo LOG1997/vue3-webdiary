@@ -18,9 +18,9 @@ onMounted(() => {
     <div class="md-edtior w-auto text-left mt-10">
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1">标题</span>
-            <input type="text" class="form-control" style="width:100px" placeholder="Username" aria-label="Username"
+            <input type="text" class="form-control" style="width:100px" placeholder="标题" aria-label="标题"
                 aria-describedby="basic-addon1" v-model="title">
-            <button class="btn btn-primary" type="submit">Button</button>
+            <button class="btn btn-primary" type="submit">提交</button>
         </div>
             <MdEditor v-model="content" />
         </div>

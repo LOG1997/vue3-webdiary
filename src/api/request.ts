@@ -9,4 +9,4 @@ export const getArtical=(data:object)=>get('/getArtical',data)
 
 
 
-export const upartical=(data:any)=>post(`/upartical`,data);
+export const submitArtical=(data:any)=>post(`/upartical`,data);

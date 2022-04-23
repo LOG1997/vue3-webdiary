@@ -15,7 +15,7 @@ import { ref, reactive } from 'vue';
                 </router-link>
                 <li class=" hover:text-blue-400">内容</li>
 
-                <router-link to="/editor" class="no-underline text-gray-50">
+                <router-link to="/newcontent" class="no-underline text-gray-50">
                     <li class=" hover:text-blue-400">编辑</li>
                 </router-link>
                 <li class=" hover:text-blue-400">关于</li>

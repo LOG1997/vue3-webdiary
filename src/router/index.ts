@@ -28,6 +28,11 @@ const routes = [
     name: "Content",
     component: () => import("../views/Content.vue"),
   },
+  {
+    path: "/newcontent",
+    name: "NewContent",
+    component: () => import("../views/NewContent.vue"),
+  },
 ];
 
 const router = createRouter({

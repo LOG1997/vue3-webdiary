@@ -30,7 +30,8 @@ exports.submitArtical = async (req, res) => {
         content text not null,\
         create_time datetime,\
         update_time datetime,\
-        label varchar(255),
+        label varchar(255),\
+        is_done boolean default false,\
         index(user_id),\
         index(title),\
         index(label)\
