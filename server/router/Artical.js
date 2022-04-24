@@ -2,13 +2,17 @@ const mysql = require("../mysql/async_blog_pool");
 // 提交数据
 exports.submitArtical = async (req, res) => {
   let user_id = req.body.user_id;
-  let id = req.body.id;
+  let id =parseInt(req.body.id);
   let title = req.body.title;
   let content = req.body.content;
   let create_time = req.body.create_time;
   let update_time = req.body.update_time;
-  let label = req.body.label;
+  let label = req.body.label
   let imgUrl = req.body.label || "https://picsum.photos/200/200";
+  console.log("id:",id)
+  if(!req.body.id&&isNaN(id)){
+    return res.json({msg:"数据格式错误"})
+  }
   let sqldata = [
     user_id,
     id,
@@ -22,10 +26,11 @@ exports.submitArtical = async (req, res) => {
     update_time,
     label,
   ];
+  // 判断id是否为int类型
   // 创建存储文章的表
   let sqlCreateTable = `create table if not exists artical(\
-        user_id varchar(255) not null,\
-        id varchar(255) not null primary key,\
+        user_id varchar(36) not null,\
+        id int UNSIGNED not null primary key AUTO_INCREMENT,\
         title varchar(255) not null,\
         content text not null,\
         create_time datetime,\
@@ -48,6 +53,7 @@ exports.submitArtical = async (req, res) => {
     }
   });
   await mysql.query(sqlInsert, sqldata).then((result) => {
+    result.info="提交成功";
     return res.json({ result: result });
   });
 };
