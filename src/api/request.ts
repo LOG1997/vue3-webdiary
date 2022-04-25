@@ -5,8 +5,4 @@ export const getAll=(data:object)=>get(`/getArticalList`,data);
 // 获取单篇文章指定id
 export const getArtical=(data:object)=>get('/getArtical',data)
 
-
-
-
-
-export const submitArtical=(data:any)=>post(`/upartical`,data);
+export const submitArtical=(data:object)=>post(`/submitArtical`,data);

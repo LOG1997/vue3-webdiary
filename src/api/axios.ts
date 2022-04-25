@@ -4,10 +4,10 @@ import qs from "qs";
 axios.defaults.baseURL = "/api";
 
 //post请求头
-axios.defaults.headers.post["Content-Type"] = "application/json";
+// axios.defaults.headers.post["Content-Type"] = "application/json";
 
 //允许跨域携带cookie信息
-axios.defaults.withCredentials = true;
+// axios.defaults.withCredentials = true;
 
 //设置超时
 axios.defaults.timeout = 15000;

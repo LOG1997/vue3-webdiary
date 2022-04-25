@@ -1,17 +1,20 @@
 const mysql = require("../mysql/async_blog_pool");
 // 提交数据
 exports.submitArtical = async (req, res) => {
+  // console.log(req)
   let user_id = req.body.user_id;
-  let id =parseInt(req.body.id);
+  let id =req.body.id;
   let title = req.body.title;
   let content = req.body.content;
-  let create_time = req.body.create_time;
-  let update_time = req.body.update_time;
+  let create_time = req.body.create_time ||new Date();
+  let update_time = req.body.update_time  ||new Date();;
   let label = req.body.label
-  let imgUrl = req.body.label || "https://picsum.photos/200/200";
-  console.log("id:",id)
-  if(!req.body.id&&isNaN(id)){
-    return res.json({msg:"数据格式错误"})
+  let imgUrl = req.body.imgUrl || "https://picsum.photos/200/200";
+  // 判断id格式
+  if(id&&isNaN(parseInt(id))){
+    console.log(id.length)
+    console.log("id:",typeof id,id)
+    return res.json({msg:"id格式错误"});
   }
   let sqldata = [
     user_id,
@@ -21,12 +24,17 @@ exports.submitArtical = async (req, res) => {
     create_time,
     update_time,
     label,
+    imgUrl,
     title,
     content,
     update_time,
     label,
+    imgUrl
   ];
-  // 判断id是否为int类型
+  let sqlInsert =
+  "insert into artical(user_id,id,title,content,create_time,update_time,label,imgUrl) values(?,?,?,?,?,?,?,?)\
+  on duplicate key update title=?,content=?,update_time=?,label=?,imgUrl=?";
+
   // 创建存储文章的表
   let sqlCreateTable = `create table if not exists artical(\
         user_id varchar(36) not null,\
@@ -36,14 +44,12 @@ exports.submitArtical = async (req, res) => {
         create_time datetime,\
         update_time datetime,\
         label varchar(255),\
+        imgUrl varchar(255),\
         is_done boolean default false,\
         index(user_id),\
         index(title),\
         index(label)\
     )`;
-  let sqlInsert =
-    "insert into artical(user_id,id,title,content,create_time,update_time,label) values(?,?,?,?,?,?,?)\
-    on duplicate key update title=?,content=?,update_time=?,label=?";
   await mysql.query(sqlCreateTable, "", (err, results) => {
     if (err) {
       console.log(err);
@@ -54,7 +60,9 @@ exports.submitArtical = async (req, res) => {
   });
   await mysql.query(sqlInsert, sqldata).then((result) => {
     result.info="提交成功";
+    console.log("提交成功",result)
     return res.json({ result: result });
+    // return res.json({ msg:"id格式错误" });
   });
 };
 // 获取所有文章
