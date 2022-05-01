@@ -8,7 +8,7 @@ const emits = defineEmits(
 );
 // let articalContent = toRefs(props).articalItem;
 const content1 = computed(() => {
-    return props.articalItem.content.slice(1, 100) + "...";
+    return props.articalItem.content.slice(0, 100) + "...";
 });
 const labels = computed(() => {
     return props.articalItem.label.split(",");

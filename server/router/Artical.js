@@ -1,3 +1,8 @@
+/**
+ * todo:文章id前后端是否重复，避免重复提交。
+ */
+
+
 const mysql = require("../mysql/async_blog_pool");
 // 提交数据
 exports.submitArtical = async (req, res) => {
@@ -68,7 +73,7 @@ exports.submitArtical = async (req, res) => {
 // 获取所有文章
 exports.getArticalList = async (req, res) => {
   let url=req.url;
-  let host=req.headers.host;
+  let host=req.headers.host
   console.log("url:",host,url)
   let user_id = req.query.user_id;
   console.log("userid:", user_id);

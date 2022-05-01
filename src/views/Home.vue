@@ -33,12 +33,18 @@ function getDetail(data:any){
         }
     })
 }
+// 跳转用户登录页面
+function toUserRoute(data:string){
+    router.push({
+        path:`/${data}`
+    })
+}
 </script>
  
 <template>
     <header class="w-auto h-20 bg-gray-800 flex text-warm-gray-200 justify-center shadow-xl">
 
-        <Head @clicktoPage="clicktoPage"></Head>
+        <Head @clicktoPage="clicktoPage" @toUserRoute="toUserRoute"></Head>
     </header>
     <main class="w-auto border-2 grid grid-cols-1 grid-rows-3 justify-items-center">
         <div class="w-3/5 h-100  min-3/5">

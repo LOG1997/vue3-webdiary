@@ -30,9 +30,9 @@ onMounted(() => {
 </script>
  
 <template>
-    <div v-if="data" class="text-center w-200 container mx-auto cursor-default">
-        <h2 class="w-200 mx-auto">{{ data.title }}</h2>
-        <div class="w-200 text-center mx-auto gap-10">
+    <div v-if="data" class="text-center w-200 container mx-auto cursor-default shadow-md">
+        <h2 class="w-200 mx-auto text-left h-50 leading-50 text-6xl font-bold">{{ data.title }}</h2>
+        <div class="w-200 text-left mx-auto gap-10">
             <span>author:</span>
             <span class="mr-10 bg-blue-200 w-10 pl-10 pr-10 rounded-2xl cursor-pointer">{{ data.user_id }}</span>
             <span>发表时间</span>

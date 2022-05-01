@@ -19,6 +19,7 @@ exports.query =  (sql, data) => {
             console.log(error);
             reject(error)
           } else {
+            // console.log("pool:", results);
             resolve(results);
           }
         });

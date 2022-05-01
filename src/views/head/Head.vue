@@ -1,8 +1,10 @@
 <script setup lang='ts'>
 import { ref, reactive } from 'vue';
+const emits = defineEmits(['toUserRoute'])
 
-
-
+function toUserRoute(data: string) {
+    emits("toUserRoute", data);
+}
 </script>
  
 <template>
@@ -21,7 +23,7 @@ import { ref, reactive } from 'vue';
                 <li class=" hover:text-blue-400">关于</li>
             </ul>
         </nav>
-        <div class="user w-40 h-20 flex items-center">
+        <div class="user w-40 h-20 flex items-center" @click="toUserRoute('login')">
             <div class="w-10 h-10">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-person-circle"
                     viewBox="0 0 16 16">
@@ -31,6 +33,7 @@ import { ref, reactive } from 'vue';
                 </svg>
             </div>
             <span class="leading-20 ml-5">user</span>
+    
         </div>
     </div>
 </template>

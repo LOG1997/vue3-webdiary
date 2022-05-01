@@ -33,11 +33,21 @@ const routes = [
     name: "NewContent",
     component: () => import("../views/NewContent.vue"),
   },
+  {
+    path: "/login",
+    name: "Login",
+    component: () => import("../views/user/LoginAndRegister.vue"),
+  },
 ];
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
 });
-
+// 路由守卫
+// router.beforeEach((to, from) => {
+//   // ...
+//   // explicitly return false to cancel the navigation
+//   return false
+// })
 export default router;
