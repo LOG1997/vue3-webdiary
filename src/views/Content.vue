@@ -20,8 +20,8 @@ onMounted(() => {
     user_id.value = route.query.user_id;
     console.log("Home传递过来的参数", route.query);
     getArtical({ "id": id.value }).then((result: any) => {
-        console.log("RRRR", result.artical)
-        data.value = result.artical[0]
+        console.log("RRRR", result.data.artical)
+        data.value = result.data.artical[0]
         return 1
     });
 

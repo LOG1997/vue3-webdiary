@@ -11,8 +11,8 @@ import axios from 'axios'
 let articalList = ref()
 getAll({"user_id":1}).then((result:any) => {
     console.log("result:",typeof result);
-    articalList.value = result.articalList;
-    return result
+    articalList.value = result.data.articalList;
+    return result.data
 });
 // const dta=axios.get('/api/getArticalList/?user_id=1').then(result=>{
 //   console.log("RRRR",result)

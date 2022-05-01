@@ -6,3 +6,9 @@ export const getAll=(data:object)=>get(`/getArticalList`,data);
 export const getArtical=(data:object)=>get('/getArtical',data)
 
 export const submitArtical=(data:object)=>post(`/submitArtical`,data);
+// 注册
+export const register=(data:object)=>post('/register',data);
+// 登录
+export const login=(data:object)=>get('/login',data)
+// 验证token
+export const verify=()=>get('/verify',"")

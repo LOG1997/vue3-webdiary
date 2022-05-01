@@ -6,6 +6,7 @@ import { BIconArrowThroughHeartFill, BIconDice1, BIconDice2, BIconDice3, BIconDi
 
 import type { FormInstance, FormRules } from 'element-plus'
 
+import {login} from "../../api/request"
 
 const formSize = ref('default')
 const ruleFormRef = ref<FormInstance>()
@@ -36,8 +37,28 @@ const rules = reactive<FormRules>({
     ],
 
 })
-
-const submitForm = async (formEl: FormInstance | undefined) => {
+// 登录
+const submitFormLogin = async (formEl: FormInstance | undefined) => {
+    if (!formEl) return
+    await formEl.validate((valid, fields) => {
+        if (valid) {
+            console.log('submit!')
+        } else {
+            console.log('error submit!', fields)
+        }
+    })
+    let username=ruleForm.name;
+    let password=ruleForm.password;
+    console.log("发送结果:",{username,password});
+    await login({username,password}).then((result:any)=>{
+        console.log("登录结果",result)
+        if(result.data.code==200){
+            window.location.href="/home"
+        }
+    })
+}
+// 注册
+const submitFormRegister = async (formEl: FormInstance | undefined) => {
     if (!formEl) return
     await formEl.validate((valid, fields) => {
         if (valid) {
@@ -81,7 +102,7 @@ function changeLoginView() {
 
 
                         <el-form-item>
-                            <el-button type="primary" @click="submitForm(ruleFormRef)">登录</el-button>
+                            <el-button type="primary" @click="submitFormLogin(ruleFormRef)">登录</el-button>
                             <el-button @click="resetForm(ruleFormRef)">取消</el-button>
                         </el-form-item>
                     </el-form>
@@ -113,7 +134,7 @@ function changeLoginView() {
 
 
                         <el-form-item>
-                            <el-button type="primary" @click="submitForm(ruleFormRef)">注册</el-button>
+                            <el-button type="primary" @click="submitFormRegister(ruleFormRef)">注册</el-button>
                             <el-button @click="resetForm(ruleFormRef)">取消</el-button>
                         </el-form-item>
                     </el-form>

@@ -11,10 +11,10 @@ axios.defaults.baseURL = "/api";
 
 //设置超时
 axios.defaults.timeout = 15000;
-
+// 请求拦截
 axios.interceptors.request.use(
   (config) => {
-    console.log(config);
+    console.log("axios请求",config);
     return config;
   },
   (error) => {
@@ -27,6 +27,10 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   (response) => {
     if (response.status == 200) {
+      console.log("axios响应：",response)
+      if(response.data.token){
+        localStorage.setItem("token",response.data.token);
+      }
       return Promise.resolve(response);
     } else {
       return Promise.reject(response);
@@ -48,7 +52,7 @@ export default {
         data: qs.stringify(data),
       })
         .then((res) => {
-          resolve(res.data);
+          resolve(res);
         })
         .catch((err) => {
           reject(err);
@@ -63,7 +67,7 @@ export default {
         params: data,
       })
         .then((res) => {
-          resolve(res.data);
+          resolve(res);
         })
         .catch((err) => {
           reject(err);

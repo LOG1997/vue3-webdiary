@@ -15,6 +15,7 @@ router.get("/getArtical", Artical.getArtical);
 router.post('/register',user.register)
 
 router.get('/login',user.login)
+router.get('/verify',user.verify)
 
 router.get("/test", test.test);
 module.exports = router;    

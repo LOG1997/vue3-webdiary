@@ -1,10 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import axios from 'axios';
-const dta = axios.get('/api/getArticalList/?user_id=1').then(result => {
-  console.log("RRRR", result)
-  return result
-});
+import {verify} from "./api/request"
 onMounted(() => {
   console.log("App.vue ---- onMounted");
 
@@ -15,8 +12,26 @@ onMounted(() => {
   link.rel = "stylesheet";
   // link.href = "../public/css/Github.css";
   document.getElementsByTagName("head")[0].appendChild(link);
+
+
+
+  // 验证token
+  let token = localStorage.getItem("token");
+  if (token) {
+    axios.defaults.headers.common['Authorization'] = token;
+    console.log("mount:",axios.defaults)
+    verify().then((result:any) => {
+      console.log("result:",result);
+      if (result.data.code == 200) {
+        console.log("token验证成功:",result.data.data);
+        
+      } else {
+        console.log("token验证失败");
+        localStorage.removeItem("token");
+      }
+    })
+  }
 });
-console.log("data", dta)
 </script>
 <template>
   <router-view></router-view>
